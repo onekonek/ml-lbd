@@ -1,6 +1,6 @@
 tag_names = ["POS", "CHK"]
 
-class Token():
+class Token(object):
 
     def __init__(self):
         self.tags = {}
