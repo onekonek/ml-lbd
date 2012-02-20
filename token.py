@@ -1,4 +1,6 @@
 
+import collections
+
 tag_names = ["POS", "CHK"]
 
 class Token(object):
@@ -19,16 +21,21 @@ class TokenReader():
         """Reads tokens from a whitespace-separated file and returns a list.
 
         The file contains word<whitespace>tag1<TAB>tag2...
+        An empty line indicates a sentence end.
         The tag_order[i, j...] parameter defines that at column i(j..)
         tag 0(1...) (see tag_names) is present.
-        TODO(elmar): Better to use tuples here.
+        TODO(elmar): Better to use tuples here, i.e. (POS,j)-> POS-tag in
+        column j.
         
         """
         tokens_file = open(filename, "r")
         tokens = []
+        sentences = []
         for line in tokens_file:
             # Skip empty lines.
             if line.strip() == "":
+                sentences.append(tokens)
+                tokens = []
                 continue
             token = Token()
             cols = line.strip().split()
@@ -40,7 +47,7 @@ class TokenReader():
                     token.tags[tag_names[tag_name_idx]] = cols[idx + 1]
             tokens.append(token)
         tokens_file.close()
-        return tokens
+        return sentences
 
 if __name__ == '__main__':
     print("This is module %s"%(__name__))
