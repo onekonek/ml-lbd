@@ -1,3 +1,4 @@
+
 tag_names = ["POS", "CHK"]
 
 class Token(object):
