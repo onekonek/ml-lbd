@@ -71,7 +71,7 @@ class NaiveBayesClassifier(object):
 if __name__ == '__main__':
 
     reader = TokenReader()
-    feature_extractor = FeatureExtractor({'suf':'2'})
+    feature_extractor = FeatureExtractor({'suf':'3'})
     sentences = []
     sentences = reader.read_whitespaced_tokens("data/train_chunk.txt")
     sentences.extend(reader.read_whitespaced_tokens("data/test_chunk.txt"))
@@ -85,7 +85,7 @@ if __name__ == '__main__':
             label = token.tags["POS"]
             featureset.append((label, features))
     print "Extracted for {0} tokens".format(len(featureset))
-    size = int(len(featureset) * 0.0005)
+    size = int(len(featureset) * 0.1)
     train_set, test_set = featureset[size:], featureset[:size]
     print "Training."
     naive_bayes.train(train_set)
@@ -94,7 +94,6 @@ if __name__ == '__main__':
     correct_answers = []
     print "Classifying {0}.".format(len(test_set))
     for label, f in test_set:
-        print label
         res = naive_bayes.classify(f)
         result.append(res.max()[0])
         correct_answers.append(label)
