@@ -8,6 +8,7 @@ _NINF = float('-1e300')
 _START_VALUE = "<start>"
 _END_VALUE = "<end>"
 
+
 class FeatureExtractor():
 
     def __init__(self, feature_config = {}):
@@ -32,7 +33,7 @@ class FeatureExtractor():
         if ('ww' in self.feature_config.keys()):
             for i in range(self.ww_start, self.ww_end + 1):
                 if index + i == 0:
-                    features['ww[%i]_%s'% (i, _START_VALUE)] = 1
+                    features['ww[%i]_%s' % (i, _START_VALUE)] = 1
                 elif index + i == len(sentence):
                     features['ww[%i]_%s'% (i, _END_VALUE)] = 1
                 elif 0 < index + i < len(sentence):
@@ -59,13 +60,13 @@ class FrequencyMap(object):
         self._freq_map = collections.defaultdict(int)
 
     def inc(self, element, count = 1):
-        self._freq_map[element] += count 
+        self._freq_map[element] += count
         self._total += count
 
     def dec(self, element):
         if self._freq_map[element] > 0:
             self._freq_map[element] -= 1
-            self._total -=1
+            self._total -= 1
 
     def total(self):
         return self._total
@@ -82,6 +83,7 @@ class FrequencyMap(object):
                              reverse = True):
           print "{0:<10}: {1:>10} {2:>7.2f}%".format(el, self._freq_map[el],
                                          float(self._freq_map[el]*100)/self._total)
+
 
 class FeatureMap(object):
 
@@ -108,11 +110,11 @@ class FeatureMap(object):
     def keys(self):
         return self._fmap.keys()
 
+
 class ProbDist(object):
 
     def __init__(self):
         self._prob = {}
-
 
     def set(self, element, probability):
         self._prob[element] = probability
@@ -141,7 +143,6 @@ class ProbDist(object):
             return 0
         else:
             return self._prob[element]
-            
+
     def print_prob(self):
         print self._prob
-
