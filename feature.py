@@ -8,6 +8,7 @@ _NINF = float('-1e300')
 _START_VALUE = "<start>"
 _END_VALUE = "<end>"
 
+
 class FeatureExtractor():
 
     def __init__(self, feature_config = {}):
@@ -141,7 +142,6 @@ class ProbDist(object):
             return 0
         else:
             return self._prob[element]
-            
+
     def print_prob(self):
         print self._prob
-
