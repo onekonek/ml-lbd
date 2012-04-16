@@ -64,32 +64,33 @@ def generate_samples(num_samples):
             samples[(x, y)] = 0
     return samples
 
-# How many runs
-num_runs = 1000
-# How many samples to train on
-num_samples = 100
-# How many samples to use for testing
-num_test_samples = 10000
 
-total_iterations = 0
-total_p = 0
+if __name__ == '__main__':
 
+    # How many runs
+    num_runs = 1000
+    # How many samples to train on
+    num_samples = 100
+    # How many samples to use for testing
+    num_test_samples = 10000
+    total_iterations = 0
+    total_p = 0
 
-for i in range(num_runs):
-    print "Run {0} of {1}".format(i, num_runs)
-    nn = Perceptron()
-    samples = generate_samples(num_samples)
-    total_iterations += nn.train(samples, alpha=1, max_iterations=None)
-    test_samples = generate_samples(num_test_samples)
-    n_correct = 0
-    n_false = 0
-    for x, y in test_samples.items():
-        y_p = nn.classify(x)
-        if (y_p == y):
-            n_correct += 1
-        else:
-            n_false += 1
-    total_p += (float(n_false) / (n_false + n_correct))
+    for i in range(num_runs):
+        print "Run {0} of {1}".format(i, num_runs)
+        nn = Perceptron()
+        samples = generate_samples(num_samples)
+        total_iterations += nn.train(samples, alpha=1, max_iterations=None)
+        test_samples = generate_samples(num_test_samples)
+        n_correct = 0
+        n_false = 0
+        for x, y in test_samples.items():
+            y_p = nn.classify(x)
+            if (y_p == y):
+                n_correct += 1
+            else:
+                n_false += 1
+        total_p += (float(n_false) / (n_false + n_correct))
 
-print "Average iterations: {0}".format(total_iterations / num_runs)
-print "P(f(x) != g(x)): {0}".format(total_p / num_runs)
+    print "Average iterations: {0}".format(total_iterations / num_runs)
+    print "P(f(x) != g(x)): {0}".format(total_p / num_runs)
