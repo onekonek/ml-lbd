@@ -16,12 +16,13 @@ class Perceptron(object):
 
     def classify(self, input_vector):
         if inner_product(self.weights, input_vector) < self.bias:
-            return 0
+            return -1
         else:
             return 1
 
     def train(self, training_set, alpha=1, max_iterations=None):
         if self.weights is None:
+            print "Initializing weights to 0"
             self.weights = [0] * len(training_set.keys()[0])
         n = 0
         updated = True
@@ -61,7 +62,7 @@ def generate_samples(num_samples):
         if (x < y):
             samples[(x, y)] = 1
         elif (x > y):
-            samples[(x, y)] = 0
+            samples[(x, y)] = -1
     return samples
 
 
@@ -70,7 +71,7 @@ if __name__ == '__main__':
     # How many runs
     num_runs = 1000
     # How many samples to train on
-    num_samples = 100
+    num_samples = 10
     # How many samples to use for testing
     num_test_samples = 10000
     total_iterations = 0

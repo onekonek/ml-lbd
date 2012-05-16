@@ -15,7 +15,7 @@ class Coin(object):
         if (random.uniform(0, 1) > 0.5):
             self.heads += 1
         else:
-            self.tails += 1
+            self.tails += -1
         self.head_freq = float(self.heads) / self.n_flips
         self.tail_freq = float(self.tails) / self.n_flips
 
@@ -35,7 +35,7 @@ def experiment(n_coins, n_flips):
     c_min = coins[0]
     return c_1, c_rand, c_min
 
-n_runs = 100000
+n_runs = 10000
 n_coins = 1000
 n_flips = 10
 c_1_total = 0
