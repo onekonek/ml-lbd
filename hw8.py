@@ -74,7 +74,7 @@ def ex8(y_1_vs_5_train, x_1_vs_5_train, y_1_vs_5_test, x_1_vs_5_test):
   e_in = []
   for i, c in enumerate(C):
     print "Computing for c: " + str(c)
-    all_prob = svm_problem(y_1_vs_5_test, x_1_vs_5_test)
+    all_prob = svm_problem(y_1_vs_5_train, x_1_vs_5_train)
     all_param = svm_parameter('-h 0 -q -t 2 -g 1 -c ' + str(c))
     all_m = svm_train(all_prob, all_param)
     models.append(all_m)
@@ -110,7 +110,7 @@ def ex5(y_1_vs_5_train, x_1_vs_5_train, y_1_vs_5_test, x_1_vs_5_test):
     print "Computing q: " + str(q)
     for i, c in enumerate(C):
       print "Computing for c: " + str(c)
-      all_prob = svm_problem(y_1_vs_5_test, x_1_vs_5_test)
+      all_prob = svm_problem(y_1_vs_5_train, x_1_vs_5_train)
       all_param = svm_parameter('-h 0 -q -t 1 -d ' + str(q) + ' -r 1 -g 1 -c ' + str(c))
       all_m = svm_train(all_prob, all_param)
       models.append(all_m)
@@ -174,8 +174,8 @@ if __name__ == '__main__':
   y_1_vs_5_test, x_1_vs_5_test = one_vs_one_zip(y_test, x_test, 1, 5)
   print len(y_1_vs_5_train)
   print len(y_1_vs_5_test)
-  ex2(y_l_vs_all_train, x_l_vs_all_train, y_l_vs_all_test, x_l_vs_all_test)
-  #ex8(y_1_vs_5_train, x_1_vs_5_train, y_1_vs_5_test, x_1_vs_5_test)
+  #ex2(y_l_vs_all_train, x_l_vs_all_train, y_l_vs_all_test, x_l_vs_all_test)
+  ex8(y_1_vs_5_train, x_1_vs_5_train, y_1_vs_5_test, x_1_vs_5_test)
   #ex5(y_1_vs_5_train, x_1_vs_5_train, y_1_vs_5_test, x_1_vs_5_test)
 
 
