@@ -69,8 +69,12 @@ def ex8(y_1_vs_5_train, x_1_vs_5_train, y_1_vs_5_test, x_1_vs_5_test):
   models = []
   train_sets, val_sets = cross_validate_sets(y_1_vs_5_train, x_1_vs_5_train, 10)
   C = [0.01, 1.0, 100.0, 10.0**4, 10.0**6]
+  e_cv = []
+  e_out = []
+  e_in = []
   for i, c in enumerate(C):
-    all_prob = svm_problem(y_1_vs_5_train, x_1_vs_5_test)
+    print "Computing for c: " + str(c)
+    all_prob = svm_problem(y_1_vs_5_test, x_1_vs_5_test)
     all_param = svm_parameter('-h 0 -q -t 2 -g 1 -c ' + str(c))
     all_m = svm_train(all_prob, all_param)
     models.append(all_m)
@@ -88,7 +92,7 @@ def ex8(y_1_vs_5_train, x_1_vs_5_train, y_1_vs_5_test, x_1_vs_5_test):
       e_cv[i] += eval(m, y_val, x_val)
     e_cv[i] = e_cv[i] / 10.0
   for i, c in enumerate(C):
-    print "C:{0} e_cv:{1} e_out:{2} e_in:{3} n_svs:{4}\n".format(c, e_cv[i],
+    print "C:{0} e_cv:{1} e_out:{2} e_in:{3} n_svs:{4}".format(c, e_cv[i],
         e_out[i], e_in[i], len(models[i].get_SV()))
 
 
@@ -103,8 +107,10 @@ def ex5(y_1_vs_5_train, x_1_vs_5_train, y_1_vs_5_test, x_1_vs_5_test):
   e_in = []
   s = ""
   for q in Q:
+    print "Computing q: " + str(q)
     for i, c in enumerate(C):
-      all_prob = svm_problem(y_1_vs_5_train, x_1_vs_5_test)
+      print "Computing for c: " + str(c)
+      all_prob = svm_problem(y_1_vs_5_test, x_1_vs_5_test)
       all_param = svm_parameter('-h 0 -q -t 1 -d ' + str(q) + ' -r 1 -g 1 -c ' + str(c))
       all_m = svm_train(all_prob, all_param)
       models.append(all_m)
@@ -152,7 +158,7 @@ def eval(model, y, x):
 
 if __name__ == '__main__':
   y_train, x_train = load_zip_data('features.train')
-  y_test, x_test = load_zip_data('features.train')
+  y_test, x_test = load_zip_data('features.test')
   y_l_vs_all_train = []
   x_l_vs_all_train = []
   y_l_vs_all_test = []
@@ -166,8 +172,10 @@ if __name__ == '__main__':
     x_l_vs_all_test.append(x_l_test)
   y_1_vs_5_train, x_1_vs_5_train = one_vs_one_zip(y_train, x_train, 1, 5)
   y_1_vs_5_test, x_1_vs_5_test = one_vs_one_zip(y_test, x_test, 1, 5)
-  #ex2(y_l_vs_all_train, x_l_vs_all_train, y_l_vs_all_test, x_l_vs_all_test)
+  print len(y_1_vs_5_train)
+  print len(y_1_vs_5_test)
+  ex2(y_l_vs_all_train, x_l_vs_all_train, y_l_vs_all_test, x_l_vs_all_test)
   #ex8(y_1_vs_5_train, x_1_vs_5_train, y_1_vs_5_test, x_1_vs_5_test)
-  ex5(y_1_vs_5_train, x_1_vs_5_train, y_1_vs_5_test, x_1_vs_5_test)
+  #ex5(y_1_vs_5_train, x_1_vs_5_train, y_1_vs_5_test, x_1_vs_5_test)
 
 
