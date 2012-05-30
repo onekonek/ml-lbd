@@ -29,6 +29,8 @@ class Perceptron(object):
         while(updated):
             updated = False
             for x, y in training_set.items():
+            #for i in range(len(trainings_set.items())):
+            #    x, y = random.choice(training_set.items()):
                 y_p = self.classify(x)
                 if(y != y_p):
                     self.update_weights(alpha, y, y_p, x)

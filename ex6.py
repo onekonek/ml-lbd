@@ -1,9 +1,10 @@
 from lregression import *
 import math
 
-def read_samples(filename):
+def read_samples(filename, start=None, end=None):
     samples = dict()
-    for line in open(filename, "r"):
+    f = open(filename, "r")
+    for line in f.readlines()[start:end]:
         cols = [float(x) for x in line.split()]
         samples[tuple(cols[:-1])] = cols[len(cols) - 1]
     return samples

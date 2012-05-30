@@ -130,7 +130,7 @@ def ex5(y_1_vs_5_train, x_1_vs_5_train, y_1_vs_5_test, x_1_vs_5_test):
     for i, c in enumerate(C):
       s += "Q:{0} C:{1} e_cv:{2} e_out:{3} e_in:{4} n_svs:{5}\n".format(q, c, e_cv[i],
           e_out[i], e_in[i], len(models[i].get_SV()))
-    print s
+  print s
 
 
 
