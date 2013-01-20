@@ -55,16 +55,27 @@ class Perceptron(object):
         self.bias = (alpha * (t - y) * -1) + self.bias
 
 
-# Generate samples for the function f(x)=y
-def generate_samples(num_samples):
+def generate_random_function():
+    x1, y1 = random.uniform(-1, 1), random.uniform(-1, 1)
+    x2, y2 = random.uniform(-1, 1), random.uniform(-1, 1)
+    a = (y2 - y1) / (x2 - x1)
+    b = y1 - a * x1
+
+    def f(x1, x2):
+        if (a * x1 + b < x2):
+            return 1.0
+        else:
+            return -1.0
+    return a, b, f
+
+
+# Generate samples for the function f
+def generate_samples(f, num_samples):
     samples = dict()
     while len(samples) < num_samples:
         x = random.uniform(-1, 1)
         y = random.uniform(-1, 1)
-        if (x < y):
-            samples[(x, y)] = 1
-        elif (x > y):
-            samples[(x, y)] = -1
+        samples[(x, y)] = f(x, y)
     return samples
 
 
@@ -73,7 +84,7 @@ if __name__ == '__main__':
     # How many runs
     num_runs = 1000
     # How many samples to train on
-    num_samples = 10
+    num_samples = 100
     # How many samples to use for testing
     num_test_samples = 10000
     total_iterations = 0
@@ -82,9 +93,11 @@ if __name__ == '__main__':
     for i in range(num_runs):
         print "Run {0} of {1}".format(i, num_runs)
         nn = Perceptron()
-        samples = generate_samples(num_samples)
+        a, b, f = generate_random_function()
+        samples = generate_samples(f, num_samples)
         total_iterations += nn.train(samples, alpha=1, max_iterations=None)
-        test_samples = generate_samples(num_test_samples)
+        print nn.weights
+        test_samples = generate_samples(f, num_test_samples)
         n_correct = 0
         n_false = 0
         for x, y in test_samples.items():
@@ -95,5 +108,5 @@ if __name__ == '__main__':
                 n_false += 1
         total_p += (float(n_false) / (n_false + n_correct))
 
-    print "Average iterations: {0}".format(total_iterations / num_runs)
+    print "Average iterations: {0}".format(float(total_iterations) / num_runs)
     print "P(f(x) != g(x)): {0}".format(total_p / num_runs)
