@@ -15,6 +15,10 @@ class Token(object):
             for name in tag_names)
         print("{0:<20}\t{1}".format(self.string, tag_string))
 
+    def __eq__(self, other):
+        return self.string == other.string
+
+
 class TokenReader():
 
     def read_whitespaced_tokens(self, filename, tag_order = [0, 1]):
